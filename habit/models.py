@@ -2,7 +2,6 @@ from tkinter.constants import CASCADE
 
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django_celery_beat.validators import minute_validator
 
 from config import settings
 
