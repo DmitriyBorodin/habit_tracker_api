@@ -10,7 +10,7 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
 
     def get_permissions(self):
-        if self.request.method == 'POST':
+        if self.request.method == "POST":
             return [AllowAny()]
         else:
             return [IsAuthenticatedOrReadOnly()]

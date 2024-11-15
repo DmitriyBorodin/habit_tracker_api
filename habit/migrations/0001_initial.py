@@ -8,26 +8,58 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Habit',
+            name="Habit",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('place', models.CharField(max_length=255, verbose_name='Место')),
-                ('time', models.TimeField(verbose_name='Время')),
-                ('action', models.CharField(max_length=255, verbose_name='Действие')),
-                ('is_pleasant', models.BooleanField(default=False, verbose_name='Признак приятной привычки')),
-                ('periodicity', models.PositiveIntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(7)], verbose_name='Периодичность')),
-                ('reward', models.CharField(blank=True, max_length=255, null=True, verbose_name='Награда')),
-                ('duration', models.DurationField(verbose_name='Время на выполнение')),
-                ('is_public', models.BooleanField(default=False, verbose_name='Признак публичной привычки')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("place", models.CharField(max_length=255, verbose_name="Место")),
+                ("time", models.TimeField(verbose_name="Время")),
+                ("action", models.CharField(max_length=255, verbose_name="Действие")),
+                (
+                    "is_pleasant",
+                    models.BooleanField(
+                        default=False, verbose_name="Признак приятной привычки"
+                    ),
+                ),
+                (
+                    "periodicity",
+                    models.PositiveIntegerField(
+                        default=1,
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(7),
+                        ],
+                        verbose_name="Периодичность",
+                    ),
+                ),
+                (
+                    "reward",
+                    models.CharField(
+                        blank=True, max_length=255, null=True, verbose_name="Награда"
+                    ),
+                ),
+                ("duration", models.DurationField(verbose_name="Время на выполнение")),
+                (
+                    "is_public",
+                    models.BooleanField(
+                        default=False, verbose_name="Признак публичной привычки"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': ('Привычка',),
-                'verbose_name_plural': 'Привычки',
+                "verbose_name": ("Привычка",),
+                "verbose_name_plural": "Привычки",
             },
         ),
     ]

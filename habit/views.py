@@ -1,19 +1,16 @@
-from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    DestroyAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 
 from habit.models import Habit
 from habit.paginators import MyPagination
 from habit.serializers import HabitSerializer
-
-
-class OwnerPermissionMixin:
-    def get_object(self, queryset=None):
-        self.object = super().get_object(queryset)
-        if self.request.user == self.object.owner:
-            return self.object
-        raise PermissionDenied
+from users.permissions import IsOwner
 
 
 class HabitCreateAPIView(CreateAPIView):
@@ -38,26 +35,26 @@ class HabitListAPIView(ListAPIView):
         return self.get_paginated_response(serializer.data)
 
 
-class HabitRetrieveAPIView(OwnerPermissionMixin, RetrieveAPIView):
+class HabitRetrieveAPIView(RetrieveAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = [IsAuthenticated]
 
 
-class HabitUpdateAPIView(OwnerPermissionMixin, UpdateAPIView):
+class HabitUpdateAPIView(UpdateAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
 
 
-class HabitDestroyAPIView(OwnerPermissionMixin, DestroyAPIView):
+class HabitDestroyAPIView(DestroyAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
 
 
 class PublicHabitListAPIView(ListAPIView):
     queryset = Habit.objects.filter(is_public=True)
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
     pagination_class = MyPagination
